@@ -1,0 +1,9 @@
+---
+# tasks file for gpg_key
+- name: upload key
+  copy:
+    src: files/pterodactyl.key
+    dest: /tmp/pterodactyl.key
+- name: Import Key
+  command: gpg --import /tmp/pterodactyl.key
+  ignore_errors: true

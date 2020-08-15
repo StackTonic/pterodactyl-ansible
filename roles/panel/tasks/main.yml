@@ -1,0 +1,16 @@
+---
+# tasks file for panel
+
+- name: Download file with checksum url (sha256)
+  get_url:
+    url: "https://github.com/pterodactyl/panel/releases/download/{{ panel_version }}/panel.tar.gz"
+    dest: "/tmp/panel.{{ panel_version }}.tar.gz"
+    checksum: "sha256:https://github.com/pterodactyl/panel/releases/download/{{ panel_version }}/checksum.txt"
+
+- name: Download Signature
+  get_url:
+    url: "https://github.com/pterodactyl/panel/releases/download/{{ panel_version }}/panel.asc"
+    dest: "/tmp/panel.{{ panel_version }}.asc"
+
+- name: Verify Signature
+  command: "gpg --verify /tmp/panel.{{ panel_version }}.asc /tmp/panel.{{ panel_version }}.tar.gz"
